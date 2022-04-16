@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-
 namespace DVD_Rental_Application.Models
 {
     public class AppDbContext : DbContext
