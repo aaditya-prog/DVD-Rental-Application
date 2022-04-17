@@ -1,4 +1,5 @@
 using DVD_Rental_Application.Models;
+using DVD_Rental_Application.Services;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,10 @@ builder.Services.AddControllersWithViews();
 //Database Config
 string cs = "Server=localhost;Database=dvdrental_db;Trusted_Connection=True;";
 builder.Services.AddDbContext<AppDbContext>(op => op.UseSqlServer(cs));
+
+//Add "UserService"
+builder.Services.AddScoped<UserService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
