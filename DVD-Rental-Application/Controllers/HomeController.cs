@@ -31,7 +31,7 @@ namespace DVD_Rental_Application.Controllers
             return View();
         }
 
-        //need to remove register from home
+        //register an admin
         public IActionResult Register(User users)
         {
           
@@ -43,28 +43,23 @@ namespace DVD_Rental_Application.Controllers
             return View();
         }
 
+
+        //login "GET" Request
         [HttpGet]
         public IActionResult Login(string ReturnUrl)
         {
             ViewData["ReturnUrl"] = ReturnUrl;
-            /*if (Login == admin)
-            {
-                return RedirectToAction("Home", "Admin");
-            }
-            else
-            {
-                return RedirectToAction("Home", "Users");
-            }*/
             return View();
         }
 
+        //Login "POST" Request
         [HttpPost]
-        public async Task<IActionResult> Login(string name, string type, string ReturnUrl)
+        public async Task<IActionResult> Login(string username, string password, string ReturnUrl)
         {
-            //login functionality
+       
             ViewData["ReturnUrl"] = ReturnUrl;
 
-            if (_userService.TryValidateUser(name, type, out List<Claim> claims))
+            if (_userService.TryValidateUser(username, password, out List<Claim> claims))
             {
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
@@ -76,7 +71,8 @@ namespace DVD_Rental_Application.Controllers
                 }
                 else
                 {
-                    return RedirectToAction("Dashboard", "Users", new { IsLogin = true });
+                    //return RedirectToAction("privcy", "Home", new { IsLogin = true });
+                    return Redirect("home/privacy");
                 }
             }
             else
@@ -86,8 +82,7 @@ namespace DVD_Rental_Application.Controllers
             }
         }
 
-        //logout of the appliation 
-
+        //Logout
         [Authorize]
         public async Task<IActionResult> Logout()
         {

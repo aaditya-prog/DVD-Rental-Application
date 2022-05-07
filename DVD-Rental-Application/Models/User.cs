@@ -14,6 +14,7 @@ namespace DVD_Rental_Application.Models
 
         [Required(ErrorMessage ="Password is a required field")]
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$", ErrorMessage = "Invalid Password, Length must be between 8 to 15 characters, must contain an uppercase letter, a number and a special character ")]
+        [DataType(DataType.Password)]
         public string? Password { get; set; }
 
 

@@ -16,28 +16,27 @@ namespace DVD_Rental_Application.Services
             _context = context;
         }
 
-        internal User GetUserById(int id)
+        internal User GetUserById(int UserNumber)
         {
-            var appUser = _context.users.Find(id);
+            var appUser = _context.users.Find(UserNumber);
             return appUser;
         }
 
-        internal bool TryValidateUser(string name, string type, out List<Claim> claims)
+        internal bool TryValidateUser (string username, string password, out List<Claim> claims)
         {
             claims = new List<Claim>();
             var appUser = _context.users
-                .Where(a => a.UserName == name)
-                .Where(a => a.UserType == type).FirstOrDefault();
+                .Where(a => a.UserName == username)
+                .Where(a => a.Password == password).FirstOrDefault();
             if (appUser is null)
             {
                 return false;
             }
             else
             {
-                claims.Add(new Claim("id", appUser.UserNumber.ToString()));
-                claims.Add(new Claim("name", appUser.UserName));
-                claims.Add(new Claim("usertype", appUser.UserType));
-                claims.Add(new Claim("password", appUser.Password));
+                claims.Add(new Claim("UserNumber", appUser.UserNumber.ToString()));
+                claims.Add(new Claim("userName", appUser.UserName));
+                claims.Add(new Claim("Password", appUser.Password));
             }
             return true;
         }

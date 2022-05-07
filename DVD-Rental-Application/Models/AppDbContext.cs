@@ -3,9 +3,7 @@ namespace DVD_Rental_Application.Models
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions options) : base(options)
-        {
-        }
+       
         public DbSet<User> users { get; set; }
         public DbSet<Actor> actors { get; set; }
         public DbSet<Studio> studios { get; set; }
@@ -22,6 +20,12 @@ namespace DVD_Rental_Application.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CastMember>().HasNoKey();
+        }
+
+        public AppDbContext(DbContextOptions<AppDbContext> options)
+            : base(options)
+        {
+            Database.EnsureCreated();
         }
     }
 }
